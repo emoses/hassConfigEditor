@@ -1,0 +1,22 @@
+* Hass Config Editor
+*** Overview
+    If you've ever need to make mass edits to your dashboard, you'll find there's no API in Home Assistant to do so.
+    However, the config *is* there to be edited, you just have to get to it.  This is a small Deno script that uses the
+    HomeAssistant websocket API to get and set configs the same way that Lovelace does.
+*** Running
+    [[https://deno.com/manual@v1.33.2/getting_started/installation][Install Deno]].
+
+    Create a long-lived API token for your Home Assistant user, and then create a ~.env~ file in the base directory like so:
+    #+begin_src
+      HASS_TOKEN=<your token>
+    #+end_src
+
+    Download your lovelace dashboard as JSON.
+    #+begin_src bash
+      deno run --allow-net --allow-read=.env,.env.defaults clients.ts get > dashboard.json
+    #+end_src
+
+    Edit it as you see fit, then upload it back:
+    #+begin_src bash
+      deno run --allow-net --allow-read=.env,.env.defaults clients.ts set < dashboard.json
+    #+end_src
